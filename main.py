@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
-from datas import *
+from datas import kurs
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import psycopg2
 import logging
@@ -83,7 +84,7 @@ def index(animal_id):
     except Exception as e:
         conn2.rollback()
         logging.error(f"Ошибка при выполнении запроса: {e}", exc_info=True)
-        return f'произошла ошибка при работе с БД', 500
+        return 'произошла ошибка при работе с БД ', 500
 
 @app.route("/plant/<plant_id>")
 def plants(plant_id):
@@ -111,39 +112,11 @@ def plants(plant_id):
     except Exception as e:
         conn2.rollback()
         logging.error(f"Ошибка при выполнении запроса: {e}", exc_info=True)
-        return f'произошла ошибка при работе с БД', 500
+        return 'произошла ошибка при работе с БД', 500
 
 @app.route("/")
 def basic():
     return render_template("base.html")
-
-# @app.route("/frogs")
-# def frogs():
-#     return render_template("index.html", table2=frogs_data)
-
-# @app.route("/snails")
-# def snails():
-#     return render_template("index.html", table2=snails_data)
-
-# @app.route("/dynos")
-# def dynos():
-#     return render_template("index.html", table2=dynos_data)
-
-# @app.route("/pig")
-# def pigs():
-#     return render_template("index.html", table2=pig_data)
-
-# @app.route("/chamomile")
-# def chamomile():
-#     return render_template("plants.html", table2=chamomile_data)
-
-# @app.route("/tulip")
-# def tulip():
-#     return render_template("plants.html", table2=tulip_data)
-
-# @app.route("/cactus")
-# def cactus():
-#     return render_template("plants.html", table2=cactus_data)
 
 @app.route("/forms", methods=["GET", "POST"])
 def forms():
@@ -161,7 +134,7 @@ def forms():
         except Exception as e:
             conn2.rollback()
             logging.error(f"Ошибка при выполнении запроса: {e}", exc_info=True)
-            return f'произошла ошибка при работе с БД', 500
+            return 'произошла ошибка при работе с БД', 500
     return render_template("forms.html")
 
 @app.route("/converter", methods=["GET", "POST"])
@@ -176,21 +149,27 @@ def converter():
 def register():
     try:
         if request.method == "POST":
-            user_name = request.form["user-name"]
-            password = request.form["password"]
-            with conn2.cursor() as cur:
-                cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (user_name, password))
+            login = request.form.get("login")
+            username = request.form.get("username")
+            password = request.form.get("password")
+            if not (login and password and username):
+                logging.warning("Ошибка при регистрации. Не все данные указаны")
+                return "Ошибка регистрации", 500
+            password_hash = generate_password_hash(password)
+            with conn.cursor() as cur:
+                logging.info("Попытка зарегестрироваться")
+                cur.execute("INSERT INTO users (login, password_hash, username) VALUES (%s, %s, %s)", (login, password_hash, username))
                 conn.commit()
             # file = open("users.txt", "a", encoding="utf-8")
             # file.write(f'{user_name}:{password}\n')
             # file.close()
-            logging.info(f"Пользователь {user_name} успешно зарегистрировался")
-            return "успешно"
+            logging.info(f"Пользователь {username} успешно зарегистрировался")
+            return "успешно", 200
         return render_template("register.html")
     except Exception as e:
         conn2.rollback()
         logging.error(f"Ошибка при выполнении запроса: {e}", exc_info=True)
-        return f'произошла ошибка при работе с БД', 500
+        return 'произошла ошибка при работе с БД', 500
 
 @app.route("/users")
 def users():
@@ -205,7 +184,7 @@ def users():
     except Exception as e:
         conn2.rollback()
         logging.error(f"Ошибка при выполнении запроса: {e}", exc_info=True)
-        return f'произошла ошибка при работе с БД', 500
+        return 'произошла ошибка при работе с БД', 500
 
 def main():
     app.run(debug=True)
