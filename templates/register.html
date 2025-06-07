@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="/register" method="post">
+        <div>
+            <label for="user-name">Имя: </label>
+            <input type="text" name="user-name" id="user-name", placeholder="Имя">
+        </div>
+        <div>
+            <label for="password">Пароль: </label>
+            <input type="text" name="password" id="password", placeholder="Пароль">
+        </div>
+        <input type="submit" value="Отправить">
+    </form>
+{% endblock %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+    <div>
+        <h1>Все пользователи сайта</h1>
+        <div>
+            {% for user in users %}
+            <p>{{user}}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

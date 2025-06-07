@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div>Добро пожаловать на сайт с животными и растениями!</div>
+    <div class="container">
+        <div class="side">
+            <h1>Навигация</h1>
+            <ul> 
+                {% for title, value in navigation.items() %} 
+                    <li>{{ title }}</li>
+                    <ul>
+                        {% for k, v in value.items() %}
+                            <li>><a href="/{{ v[0] }}/{{ k }}">{{ v[1] }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+                <li><a href="/forms">Добавить странницу</a></li>
+                <li><a href="/register">Регистрация</a></li>
+            </ul>
+        </div>
+        <div class="main">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

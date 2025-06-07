@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="/forms" method="post">
+    <div>
+        <label for="animal-title">Название животного: </label>
+        <input type="text" name="animal-title" id="animal-title", placeholder="Название животного">
+    </div>
+    <div>
+        <label for="desc">Описание</label>
+        <input type="text" name="desc" id="desc", placeholder="Описание">
+    </div>
+    <div>
+        <label for="img">Фото:</label>
+        <input type="text" name="img" id="img">
+    </div>
+    <div>
+        <label for="animal-vids">Виды животного: </label>
+        <input type="text" name="animal-vids" id="animal-vids", placeholder="Виды животного">
+    </div>
+    <input type="submit" value="Отправить">
+</form>
+{% endblock %}

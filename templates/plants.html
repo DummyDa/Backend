@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} {{table2.title}} {% endblock %}
+{% block content %}
+<div class="plants">
+    <div>Название растения: {{table2.name}}</div>
+    <div>Описание растения: {{table2.description}}</div>
+    <div>
+        <h1>Картинка:</h1>
+        <img src={{table2.img}} alt="">
+    </div>
+    <div>
+        <h1>Виды:</h1>
+        <p><img src="{{table2.vids}}" alt="{{table2.vids}}"></p>
+    </div>
+</div>
+{% endblock %}

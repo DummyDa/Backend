@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converter</title>
+</head>
+<body>
+    <form action="/converter" method="post">
+        <div>
+            <select name="currency" id="currency">
+                <option value="USD">Доллары</option>
+                <option value="EUR">Евро</option>
+                <option value="BTC">Биткоин</option>
+            </select>
+        </div>
+        <div>
+            <label for="desc">Сумма</label>
+            <input type="number" name="summa" id="summa">
+        </div>
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>
