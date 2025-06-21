@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from datas import kurs
 from werkzeug.security import generate_password_hash, check_password_hash
+from functions import check_user
 import os
 import psycopg2
 import logging
@@ -160,16 +161,41 @@ def register():
                 logging.info("Попытка зарегестрироваться")
                 cur.execute("INSERT INTO users (login, password_hash, username) VALUES (%s, %s, %s)", (login, password_hash, username))
                 conn.commit()
-            # file = open("users.txt", "a", encoding="utf-8")
-            # file.write(f'{user_name}:{password}\n')
-            # file.close()
+
             logging.info(f"Пользователь {username} успешно зарегистрировался")
             return "успешно", 200
         return render_template("register.html")
     except Exception as e:
-        conn2.rollback()
+        conn.rollback()
         logging.error(f"Ошибка при выполнении запроса: {e}", exc_info=True)
         return 'произошла ошибка при работе с БД', 500
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        login = request.form.get("login")
+        password = request.form.get("password")
+        print(login, password)
+        if not (login and password):
+            logging.warning("Ошибка при входе. Не все данные указаны")
+            return "Ошибка регистрации", 500
+        with conn.cursor() as cur:
+            try:
+                logging.info("Попытка войти в аккаунт")
+                cur.execute("SELECT login, password_hash FROM users")
+                rows = cur.fetchall()
+                result = check_user(rows, login, password)
+                if result:
+                    logging.info(f'Пользователь {login} успешно вошел в аккаунт')
+                    return "Успешно", 200
+                else:
+                    logging.warning('Ошибка при входе. Неверные данные')
+                    return "Неверные данные", 500
+            except Exception as e:
+                conn.rollback()
+                logging.error(f'Ошибка при выполнении запроса: {e}', exc_info=True)
+                return "Ошибка при работе с БД", 500
+    return render_template("login.html")
 
 @app.route("/users")
 def users():
