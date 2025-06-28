@@ -1,26 +1,67 @@
-.animals {
-    border: 2px solid black;
-    font-family: 'Segoe UI';
-    background-color: beige;
-    border-radius: 10px;
-    box-shadow: 12px 12px 2px 1px black;
+body {
+    background-color: #d0f0c0;
 }
 
-.plants {
+
+.default {
     border: 3px solid greenyellow;
     font-family: 'Segoe UI';
     border-radius: 10px;
-    box-shadow: 12px 12px 2px 1px green;
+    box-shadow: 0 4px 20px rgba(0, 128, 0, 0.2);
+    background-color: #fdf6e3;
     margin-left: auto;
     margin-right: auto;
     max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .container {
     display: flex;
     align-items: flex-start;
+    gap: 20px;
+}
+
+.side {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fdf6e3;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 128, 0, 0.2);
+    padding: 20px;
+    margin: 20px;
+    max-width: 280px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .main {
     flex-grow: 1;
+}
+
+.image {
+    height: auto;
+    display: block;
+    max-width: 700px; 
+    max-height: 700px;
+    max-width: 100%;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.welcome-title {
+    font-family: 'Segoe UI';
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #c8e6c9;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.1);
 }

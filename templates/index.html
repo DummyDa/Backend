@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 {% block title %} {{table2.title}} {% endblock %}
 {% block content %}
-<div class="animals">
+<div class="default">
     <div>Название: {{table2.name}}</div>
     <div>Описание: {{table2.description}}</div>
-    <div>
+    <div class="image">
         <h1>Картинка:</h1>
         <img src={{table2.img}} alt="">
     </div>
     <div>
         <h1>Виды:</h1>
         <p><img src="{{table2.vids}}" alt="{{table2.vids}}"></p>
+    </div>
+    <div class="autor">
+        <h1>Автор: </h1>
+        <p>{{table2.autor}}</p>
     </div>
 </div>
 {% endblock %}
