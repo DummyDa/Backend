@@ -4,7 +4,6 @@ from db import conn2
 
 navigation_bp = Blueprint("navigation", __name__)
 
-@navigation_bp.context_processor
 def data():
     with conn2.cursor() as cur2:
         animals = {}
